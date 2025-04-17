@@ -21,7 +21,7 @@ const Login = ({ setToken }) => {
     
     try {
       console.log('Attempting login with identifier:', identifier);
-      const response = await axios.post('http://localhost:3001/login', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, {
         identifier,
         password
       });
