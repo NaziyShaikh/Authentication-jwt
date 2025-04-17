@@ -11,8 +11,13 @@ const JWT_SECRET = process.env.JWT_SECRET;
 app.use(cors());
 app.use(express.json());
 
-// In-memory storage (replace with database in production)
+
 let users = [];
+
+// Root route
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to the authentication API' });
+});
 
 // JWT verification middleware
 const verifyToken = (req, res, next) => {
@@ -35,7 +40,6 @@ const verifyToken = (req, res, next) => {
 app.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    console.log('Register request:', { name, email }); // Debug log
     
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
@@ -56,7 +60,6 @@ app.post('/register', async (req, res) => {
     };
     
     users.push(user);
-    console.log('User registered:', user); // Debug log
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Registration error:', error);
@@ -68,7 +71,6 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   try {
     const { identifier, password } = req.body;
-    console.log('Login request:', { identifier }); // Debug log
     
     if (!identifier || !password) {
       return res.status(400).json({ message: 'Username/Email and password are required' });
@@ -79,13 +81,11 @@ app.post('/login', async (req, res) => {
     );
     
     if (!user) {
-      console.log('User not found'); // Debug log
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      console.log('Invalid password'); // Debug log
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
@@ -95,7 +95,6 @@ app.post('/login', async (req, res) => {
       { expiresIn: '24h' }
     );
     
-    console.log('Login successful'); // Debug log
     res.json({ token, user: { name: user.name, email: user.email } });
   } catch (error) {
     console.error('Login error:', error);
@@ -105,19 +104,27 @@ app.post('/login', async (req, res) => {
 
 // Protected route
 app.get('/protected', verifyToken, (req, res) => {
-  console.log('Accessing protected route'); // Debug log
   res.json({ 
     message: 'Welcome to the protected route',
     user: req.user
   });
 });
 
-// Error handling middleware
+//  error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
-app.listen(PORT, () => {
+// Start servering using port
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  server.close(() => {
+    console.log('HTTP server closed');
+  });
 });
