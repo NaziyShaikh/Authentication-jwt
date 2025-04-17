@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Protected.css';
 
-const Protected = () => {
+const Protected = ({ token }) => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (!token) {
@@ -15,12 +14,12 @@ const Protected = () => {
 
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/protected', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/protected`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
-        setUserData(response.data);
+        setUserData(response.data.user);
       } catch (error) {
         if (error.response?.status === 401) {
           localStorage.removeItem('token');
@@ -32,15 +31,13 @@ const Protected = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [token]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // Decode the token to get user information
-  const decodedToken = token && JSON.parse(atob(token.split('.')[1]));
-  const userName = decodedToken?.name || 'Unknown User';
+  const userName = userData?.name || 'Unknown User';
 
   return (
     <div className="protected-container">
@@ -64,7 +61,7 @@ const Protected = () => {
         </div>
         
         <div className="centered-actions">
-          <button className="logout-btn" style={{ backgroundColor: 'red', color: 'white' }} onClick={() => {
+          <button className="logout-btn" onClick={() => {
             localStorage.removeItem('token');
             window.location.href = '/login';
           }}>
