@@ -127,4 +127,7 @@ process.on('SIGTERM', () => {
   server.close(() => {
     console.log('HTTP server closed');
   });
+});// At the end of your server.js file, add this route handler
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
