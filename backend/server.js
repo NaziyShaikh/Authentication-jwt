@@ -17,11 +17,6 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 let users = [];
 
-// Root route
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to the authentication API' });
-});
-
 // JWT verification middleware
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -71,12 +66,12 @@ app.post('/register', async (req, res) => {
 // Login route
 app.post('/login', async (req, res) => {
   try {
-    const { identifier, password } = req.body;
-    if (!identifier || !password) {
-      return res.status(400).json({ message: 'Username/Email and password are required' });
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
     }
 
-    const user = users.find(u => u.email === identifier);
+    const user = users.find(u => u.email === email);
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
