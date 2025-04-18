@@ -6,13 +6,20 @@ import Protected from './components/Protected';
 import './App.css';
 
 function App() {
+  const token = localStorage.getItem('token');
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/protected" element={<Protected />} />
+        <Route 
+          path="/protected" 
+          element={
+            token ? <Protected token={token} /> : <Navigate to="/login" />
+          } 
+        />
       </Routes>
     </Router>
   );
