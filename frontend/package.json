@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "[https://authentication-jwt-0dlk.onrender.com](https://authentication-jwt-0dlk.onrender.com)",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -13,7 +12,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rm -rf build && react-scripts build",
+    "build": "PUBLIC_URL='' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

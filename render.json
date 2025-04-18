@@ -3,14 +3,14 @@
     {
       "type": "web",
       "name": "frontend",
-      "buildCommand": "cd frontend && npm install && npm run build",
-      "startCommand": "serve -s build",
+      "buildCommand": "cd frontend && npm install && PUBLIC_URL='' npm run build",
+      "startCommand": "serve -s frontend/build",
       "env": {
         "REACT_APP_API_URL": "[https://authentication-jwt-0dlk.onrender.com](https://authentication-jwt-0dlk.onrender.com)"
       },
       "build": {
         "publish": [
-          "build"
+          "frontend/build"
         ]
       }
     },
