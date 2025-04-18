@@ -1,18 +1,17 @@
-[
-build
-]
+[build]
   base = "frontend"
   command = "npm install && npm run build"
-  publish = "build"
+  publish = "frontend/build"
 
-[
-build.environment
-]
-  REACT_APP_API_URL = "https://authentication-jwt-0dlk.onrender.com"
+[build.environment]
+  REACT_APP_API_URL = "[https://authentication-jwt-0dlk.onrender.com](https://authentication-jwt-0dlk.onrender.com)"
 
-[[
-redirects
-]]
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
