@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+  base = "frontend"
+
+[build.environment]
+  REACT_APP_API_URL = "[https://authentication-jwt-0dlk.onrender.com](https://authentication-jwt-0dlk.onrender.com)"

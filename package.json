@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "scripts": {
     "build": "cd frontend && npm run build",
-    "postbuild": "rm -rf build && cp -R frontend/build ."
+    "postbuild": "mkdir -p build && cp -R frontend/build/* build/"
   }
 }
