@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "PUBLIC_URL='' react-scripts build",
+    "build": "set PUBLIC_URL='' && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

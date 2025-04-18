@@ -3,7 +3,7 @@
     {
       "type": "web",
       "name": "frontend",
-      "buildCommand": "cd frontend && npm install && npm run build",
+      "buildCommand": "cd frontend && npm install && set PUBLIC_URL='' && npm run build",
       "startCommand": "serve -s frontend/build",
       "env": {
         "REACT_APP_API_URL": "https://authentication-jwt-0dlk.onrender.com"
@@ -12,17 +12,6 @@
         "publish": [
           "frontend/build"
         ]
-      }
-    },
-    {
-      "type": "web",
-      "name": "backend",
-      "buildCommand": "npm install",
-      "startCommand": "node server.js",
-      "env": {
-        "PORT": "3000",
-        "NODE_ENV": "production",
-        "JWT_SECRET": "your-secret-key"
       }
     }
   ]
