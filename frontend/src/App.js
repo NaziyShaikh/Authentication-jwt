@@ -1,39 +1,19 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Register from './components/Register';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
+import Register from './components/Register';
 import Protected from './components/Protected';
+import './App.css';
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
-  };
-
   return (
     <Router>
-      <div className="App">
-        <nav>
-          <div className="nav-links">
-            <a href="/register">Register</a>
-            <a href="/login">Login</a>
-            {token && (
-              <button onClick={logout}>Logout</button>
-            )}
-          </div>
-        </nav>
-
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route 
-            path="/protected" 
-            element={token ? <Protected /> : <Navigate to="/login" />}
-          />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/protected" element={<Protected />} />
+      </Routes>
     </Router>
   );
 }

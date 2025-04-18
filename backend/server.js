@@ -35,7 +35,7 @@ const verifyToken = (req, res, next) => {
 };
 
 // Register route
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
@@ -64,7 +64,7 @@ app.post('/register', async (req, res) => {
 });
 
 // Login route
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -95,7 +95,7 @@ app.post('/login', async (req, res) => {
 });
 
 // Protected route
-app.get('/protected', verifyToken, (req, res) => {
+app.get('/api/protected', verifyToken, (req, res) => {
   res.json({ 
     message: 'Welcome to the protected route',
     user: req.user
