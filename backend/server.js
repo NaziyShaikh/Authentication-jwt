@@ -90,11 +90,11 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// Protected route
+
 app.get('/api/protected', verifyToken, (req, res) => {
   res.json({
-    message: 'Welcome to the protected route!',
-    user: req.user
+    message: 'This is protected data!',
+    user: req.user 
   });
 });
 
