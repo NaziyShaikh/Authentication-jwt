@@ -31,6 +31,10 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the authentication with jwt Backend!');
+  });
+
 // Register route
 app.post('/api/register', async (req, res) => {
   try {
