@@ -109,7 +109,7 @@ export default function Register() {
       </form>
       {message && <p className="message">{message}</p>}
       <div className="auth-links">
-        <p>Already have an account? <a href="/login">Login here</a></p>
+        <p>Already have an account? <Link to="/login">Login here</Link></p>
       </div>
     </div>
   );
