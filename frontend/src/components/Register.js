@@ -32,12 +32,10 @@ export default function Register() {
       return;
     }
     try {
-      await axios.post(`${API_BASE_URL}/api/register`, {
-        name: formData.name,
-        email: formData.email,
-        username: formData.username,
-        password: formData.password
-      });
+     await axios.post(`${API_BASE_URL}/api/register`, {
+       username: formData.username,
+       password: formData.password
+     });
       setMessage('Registration successful! Please login.');
       setFormData({
         name: '',
