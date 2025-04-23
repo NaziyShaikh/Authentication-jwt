@@ -1,6 +1,7 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 export default function Login() {
@@ -62,9 +63,9 @@ export default function Login() {
         <button type="submit" className="form-button">Login</button>
       </form>
       {message && <p className="message error-message">{message}</p>}
-      <div className="auth-links">
-        <p>Don't have an account? <a href="/register">Register here</a></p>
-      </div>
+     <div className="auth-links">
+       <p>Don't have an account? <Link to="/register">Register here</Link></p>
+     </div>
     </div>
   );
 }

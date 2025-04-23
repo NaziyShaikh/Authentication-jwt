@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
   });
 
 // Register route
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
