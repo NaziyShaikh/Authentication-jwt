@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function Protected() {
   const [userData, setUserData] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -14,8 +16,7 @@ export default function Protected() {
             Authorization: `Bearer ${token}`
           }
         };
-
-        const response = await axios.get('http://localhost:3001/api/protected', config);
+        const response = await axios.get(`${API_BASE_URL}/api/protected`, config);
         setUserData(response.data);
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch protected data');

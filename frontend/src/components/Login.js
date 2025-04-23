@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 export default function Login() {
   const [formData, setFormData] = useState({
     username: '',
@@ -21,9 +21,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/api/login', {
-        username: formData.username,
-        password: formData.password
+     const response = await axios.post(`${API_BASE_URL}/api/login`, {
+       username: formData.username,
+       password: formData.password
+     
       });
       localStorage.setItem('token', response.data.token);
       window.location.href = '/protected';

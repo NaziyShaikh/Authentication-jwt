@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export default function Register() {
   const [formData, setFormData] = useState({
     name: '',
@@ -28,9 +30,10 @@ export default function Register() {
       setMessage('Passwords do not match');
       return;
     }
-
     try {
-      await axios.post('http://localhost:3001/api/register', {
+      await axios.post(`${API_BASE_URL}/api/register`, {
+        name: formData.name,
+        email: formData.email,
         username: formData.username,
         password: formData.password
       });
