@@ -1,8 +1,0 @@
-{
-  "name": "authentication-jwt",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "cd frontend && npm run build",
-    "postbuild": "mkdir -p frontend/build && cp -R frontend/build/* ."
-  }
-}

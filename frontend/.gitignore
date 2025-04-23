@@ -1,3 +1,4 @@
-.env
-node_modules/
-build/
+# Frontend cache files
+frontend/node_modules/.cache/
+frontend/.next/
+frontend/.cache/

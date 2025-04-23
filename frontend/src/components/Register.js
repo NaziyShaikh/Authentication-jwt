@@ -1,69 +1,113 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './AuthForm.css';
+import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+export default function Register() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    
+    if (formData.password !== formData.confirmPassword) {
+      setMessage('Passwords do not match');
+      return;
+    }
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/register`, {
-        name,
-        email,
-        password
+      await axios.post('http://localhost:3001/api/register', {
+        username: formData.username,
+        password: formData.password
       });
-      window.location.href = '/login';
-    } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      setMessage('Registration successful! Please login.');
+      setFormData({
+        name: '',
+        email: '',
+        username: '',
+        password: '',
+        confirmPassword: ''
+      });
+      navigate('/login');
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Error registering');
     }
   };
 
   return (
     <div className="auth-container">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className="auth-title">Register</h2>
+      <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
-          <label>Name:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
+          <label>Full Name:</label>
+          <input 
+            type="text" 
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required 
           />
         </div>
         <div className="form-group">
           <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+          <input 
+            type="email" 
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label>Username:</label>
+          <input 
+            type="text" 
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required 
           />
         </div>
         <div className="form-group">
           <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+          <input 
+            type="password" 
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required 
           />
         </div>
-        <button type="submit">Register</button>
+        <div className="form-group">
+          <label>Confirm Password:</label>
+          <input 
+            type="password" 
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required 
+          />
+        </div>
+        <button type="submit" className="form-button">Register</button>
       </form>
-      {error && <p className="error">{error}</p>}
-      <p>
-        Already have an account?{' '}
-        <a href="/login">Login here</a>
-      </p>
+      {message && <p className="message">{message}</p>}
+      <div className="auth-links">
+        <p>Already have an account? <a href="/login">Login here</a></p>
+      </div>
     </div>
   );
-};
-
-export default Register;
+}

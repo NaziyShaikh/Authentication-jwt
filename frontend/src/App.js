@@ -1,26 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import'./App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Login';
 import Register from './components/Register';
+import Login from './components/Login';
 import Protected from './components/Protected';
-import './App.css';
 
 function App() {
-  const token = localStorage.getItem('token');
+const [token,] = useState(localStorage.getItem('token'));
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route 
-          path="/protected" 
-          element={
-            token ? <Protected token={token} /> : <Navigate to="/login" />
-          } 
-        />
-      </Routes>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route 
+            path="/protected" 
+            element={token ? <Protected /> : <Navigate to="/login" />}
+          />
+        </Routes>
+      </div>
     </Router>
   );
 }
