@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const allowedOrigins = [
-  'https://authentication-jwt-0dlk.onrender.com'    // backend (if needed)
+  'https://authentication-jwt-1-8dxf.onrender.com', // <-- your frontend
+  'https://authentication-jwt-0dlk.onrender.com',    // backend (optional)
 ];
 
 app.use(cors({
