@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function Protected() {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -43,15 +42,15 @@ return (
     ) : (
       <p>Loading...</p>
     )}
- <button
-   className="logout-button"
-   onClick={() => {
-     localStorage.removeItem('token');
-     navigate('/login');
-   }}
- >
-   Log Out
- </button>
+    <button
+      className="logout-button"
+      onClick={() => {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      }}
+    >
+      Log Out
+    </button>
   </div>
 );
 }

@@ -1,16 +1,16 @@
+// src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 export default function Login() {
   const [formData, setFormData] = useState({
     username: '',
     password: ''
   });
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // <-- INSIDE the component
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,12 +23,13 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/login`, {
-        username: formData.username,
-        password: formData.password
+     const response = await axios.post(`${API_BASE_URL}/api/login`, {
+       username: formData.username,
+       password: formData.password
+     
       });
       localStorage.setItem('token', response.data.token);
-      navigate('/protected'); // <-- Use navigate here
+      window.location.href = '/protected';
     } catch (error) {
       setMessage(error.response?.data?.message || 'Error logging in');
     }
@@ -63,9 +64,9 @@ export default function Login() {
         <button type="submit" className="form-button">Login</button>
       </form>
       {message && <p className="message error-message">{message}</p>}
-      <div className="auth-links">
-        <p>Don't have an account? <Link to="/register">Register here</Link></p>
-      </div>
+     <div className="auth-links">
+       <p>Don't have an account? <Link to="/register">Register here</Link></p>
+     </div>
     </div>
   );
 }
