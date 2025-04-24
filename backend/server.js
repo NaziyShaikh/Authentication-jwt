@@ -8,7 +8,11 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.JWT_SECRET;
 
-app.use(cors());
+
+app.use(cors({
+    origin: 'https://authentication-jwt-0dlk.onrender.com', 
+    credentials: true
+  }));
 app.use(express.json());
 
 // In-memory storage for users
