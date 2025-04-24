@@ -8,11 +8,21 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.JWT_SECRET;
 
+const allowedOrigins = [
+  '[https://authentication-jwt-1-8dxf.onrender.com](https://authentication-jwt-1-8dxf.onrender.com)', // frontend
+  '[https://authentication-jwt-0dlk.onrender.com](https://authentication-jwt-0dlk.onrender.com)'    // backend (if needed)
+];
 
 app.use(cors({
-    origin: 'https://authentication-jwt-0dlk.onrender.com', 
-    credentials: true
-  }));
+  origin: function(origin, callback){
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 // In-memory storage for users
